@@ -1,6 +1,5 @@
 package ru.itmo.common.commands.base;
 
-import javafx.beans.binding.ObjectBinding;
 import ru.itmo.common.models.StudyGroup;
 
 import java.io.Serial;

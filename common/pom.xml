@@ -25,18 +25,5 @@
             <version>12.0.2</version>
         </dependency>
     </dependencies>
-    <build>
-       <pluginManagement>
-           <plugins>
-               <plugin>
-                   <groupId>org.openjfx</groupId>
-                   <artifactId>javafx-maven-plugin</artifactId>
-                   <version>0.0.8</version>
-                   <configuration>
-                       <mainClass>ru.itmo.client.main.Main</mainClass>
-                   </configuration>
-               </plugin>
-           </plugins>
-       </pluginManagement>
-    </build>
+
 </project>
