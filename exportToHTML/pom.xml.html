@@ -1,0 +1,182 @@
+<html>
+<head>
+<title>pom.xml</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #d5b778;}
+.s1 { color: #bcbec4;}
+.s2 { color: #6aab73;}
+.s3 { color: #bcbec4;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+pom.xml</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;project </span><span class="s1">xmlns:xsi</span><span class="s2">=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; </span><span class="s1">xmlns</span><span class="s2">=&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
+         <span class="s1">xsi:schemaLocation</span><span class="s2">=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="s0">&gt;</span>
+
+    <span class="s0">&lt;modelVersion&gt;</span><span class="s3">4.0.0</span><span class="s0">&lt;/modelVersion&gt;</span>
+    <span class="s0">&lt;parent&gt;</span>
+        <span class="s0">&lt;groupId&gt;</span><span class="s3">ru.itmo</span><span class="s0">&lt;/groupId&gt;</span>
+        <span class="s0">&lt;artifactId&gt;</span><span class="s3">lab7</span><span class="s0">&lt;/artifactId&gt;</span>
+        <span class="s0">&lt;version&gt;</span><span class="s3">1.0</span><span class="s0">&lt;/version&gt;</span>
+    <span class="s0">&lt;/parent&gt;</span>
+
+    <span class="s0">&lt;artifactId&gt;</span><span class="s3">client</span><span class="s0">&lt;/artifactId&gt;</span>
+    <span class="s0">&lt;name&gt;</span><span class="s3">client</span><span class="s0">&lt;/name&gt;</span>
+
+    <span class="s0">&lt;properties&gt;</span>
+        <span class="s0">&lt;project.build.sourceEncoding&gt;</span><span class="s3">UTF-8</span><span class="s0">&lt;/project.build.sourceEncoding&gt;</span>
+        <span class="s0">&lt;maven.compiler.source&gt;</span><span class="s3">17</span><span class="s0">&lt;/maven.compiler.source&gt;</span>
+        <span class="s0">&lt;maven.compiler.target&gt;</span><span class="s3">17</span><span class="s0">&lt;/maven.compiler.target&gt;</span>
+        <span class="s0">&lt;javafx.version&gt;</span><span class="s3">17.0.0</span><span class="s0">&lt;/javafx.version&gt;</span>
+    <span class="s0">&lt;/properties&gt;</span>
+
+    <span class="s0">&lt;repositories&gt;</span>
+        <span class="s0">&lt;repository&gt;</span>
+            <span class="s0">&lt;id&gt;</span><span class="s3">central</span><span class="s0">&lt;/id&gt;</span>
+            <span class="s0">&lt;url&gt;</span><span class="s3">https://repo.maven.apache.org/maven2</span><span class="s0">&lt;/url&gt;</span>
+        <span class="s0">&lt;/repository&gt;</span>
+        <span class="s0">&lt;repository&gt;</span>
+            <span class="s0">&lt;id&gt;</span><span class="s3">oss.sonatype.org</span><span class="s0">&lt;/id&gt;</span>
+            <span class="s0">&lt;url&gt;</span><span class="s3">https://oss.sonatype.org/content/groups/public/</span><span class="s0">&lt;/url&gt;</span>
+        <span class="s0">&lt;/repository&gt;</span>
+    <span class="s0">&lt;/repositories&gt;</span>
+
+    <span class="s0">&lt;dependencies&gt;</span>
+        <span class="s0">&lt;dependency&gt;</span>
+            <span class="s0">&lt;groupId&gt;</span><span class="s3">junit</span><span class="s0">&lt;/groupId&gt;</span>
+            <span class="s0">&lt;artifactId&gt;</span><span class="s3">junit</span><span class="s0">&lt;/artifactId&gt;</span>
+            <span class="s0">&lt;version&gt;</span><span class="s3">3.8.1</span><span class="s0">&lt;/version&gt;</span>
+            <span class="s0">&lt;scope&gt;</span><span class="s3">test</span><span class="s0">&lt;/scope&gt;</span>
+        <span class="s0">&lt;/dependency&gt;</span>
+        <span class="s0">&lt;dependency&gt;</span>
+            <span class="s0">&lt;groupId&gt;</span><span class="s3">org.controlsfx</span><span class="s0">&lt;/groupId&gt;</span>
+            <span class="s0">&lt;artifactId&gt;</span><span class="s3">controlsfx</span><span class="s0">&lt;/artifactId&gt;</span>
+            <span class="s0">&lt;version&gt;</span><span class="s3">11.1.1</span><span class="s0">&lt;/version&gt;</span>
+        <span class="s0">&lt;/dependency&gt;</span>
+        <span class="s0">&lt;dependency&gt;</span>
+            <span class="s0">&lt;groupId&gt;</span><span class="s3">ru.itmo</span><span class="s0">&lt;/groupId&gt;</span>
+            <span class="s0">&lt;artifactId&gt;</span><span class="s3">common</span><span class="s0">&lt;/artifactId&gt;</span>
+            <span class="s0">&lt;version&gt;</span><span class="s3">1.0</span><span class="s0">&lt;/version&gt;</span>
+        <span class="s0">&lt;/dependency&gt;</span>
+        <span class="s0">&lt;dependency&gt;</span>
+            <span class="s0">&lt;groupId&gt;</span><span class="s3">org.openjfx</span><span class="s0">&lt;/groupId&gt;</span>
+            <span class="s0">&lt;artifactId&gt;</span><span class="s3">javafx-controls</span><span class="s0">&lt;/artifactId&gt;</span>
+            <span class="s0">&lt;version&gt;</span><span class="s3">23-ea+20</span><span class="s0">&lt;/version&gt;</span>
+        <span class="s0">&lt;/dependency&gt;</span>
+        <span class="s0">&lt;dependency&gt;</span>
+            <span class="s0">&lt;groupId&gt;</span><span class="s3">org.openjfx</span><span class="s0">&lt;/groupId&gt;</span>
+            <span class="s0">&lt;artifactId&gt;</span><span class="s3">javafx-fxml</span><span class="s0">&lt;/artifactId&gt;</span>
+            <span class="s0">&lt;version&gt;</span><span class="s3">23-ea+20</span><span class="s0">&lt;/version&gt;</span>
+        <span class="s0">&lt;/dependency&gt;</span>
+        <span class="s0">&lt;dependency&gt;</span>
+            <span class="s0">&lt;groupId&gt;</span><span class="s3">org.openjfx</span><span class="s0">&lt;/groupId&gt;</span>
+            <span class="s0">&lt;artifactId&gt;</span><span class="s3">javafx-base</span><span class="s0">&lt;/artifactId&gt;</span>
+            <span class="s0">&lt;version&gt;</span><span class="s3">23-ea+20</span><span class="s0">&lt;/version&gt;</span>
+        <span class="s0">&lt;/dependency&gt;</span>
+        <span class="s0">&lt;dependency&gt;</span>
+            <span class="s0">&lt;groupId&gt;</span><span class="s3">org.openjfx</span><span class="s0">&lt;/groupId&gt;</span>
+            <span class="s0">&lt;artifactId&gt;</span><span class="s3">javafx-graphics</span><span class="s0">&lt;/artifactId&gt;</span>
+            <span class="s0">&lt;version&gt;</span><span class="s3">23-ea+20</span><span class="s0">&lt;/version&gt;</span>
+        <span class="s0">&lt;/dependency&gt;</span>
+    <span class="s0">&lt;/dependencies&gt;</span>
+
+    <span class="s0">&lt;build&gt;</span>
+        <span class="s0">&lt;pluginManagement&gt;</span>
+            <span class="s0">&lt;plugins&gt;</span>
+                <span class="s0">&lt;plugin&gt;</span>
+                    <span class="s0">&lt;groupId&gt;</span><span class="s3">kr.motd.maven</span><span class="s0">&lt;/groupId&gt;</span>
+                    <span class="s0">&lt;artifactId&gt;</span><span class="s3">os-maven-plugin</span><span class="s0">&lt;/artifactId&gt;</span>
+                    <span class="s0">&lt;version&gt;</span><span class="s3">1.7.0</span><span class="s0">&lt;/version&gt;</span>
+                    <span class="s0">&lt;executions&gt;</span>
+                        <span class="s0">&lt;execution&gt;</span>
+                            <span class="s0">&lt;goals&gt;</span>
+                                <span class="s0">&lt;goal&gt;</span><span class="s3">detect</span><span class="s0">&lt;/goal&gt;</span>
+                            <span class="s0">&lt;/goals&gt;</span>
+                        <span class="s0">&lt;/execution&gt;</span>
+                    <span class="s0">&lt;/executions&gt;</span>
+                <span class="s0">&lt;/plugin&gt;</span>
+                <span class="s0">&lt;plugin&gt;</span>
+                    <span class="s0">&lt;artifactId&gt;</span><span class="s3">maven-clean-plugin</span><span class="s0">&lt;/artifactId&gt;</span>
+                    <span class="s0">&lt;version&gt;</span><span class="s3">3.1.0</span><span class="s0">&lt;/version&gt;</span>
+                <span class="s0">&lt;/plugin&gt;</span>
+                <span class="s0">&lt;plugin&gt;</span>
+                    <span class="s0">&lt;artifactId&gt;</span><span class="s3">maven-resources-plugin</span><span class="s0">&lt;/artifactId&gt;</span>
+                    <span class="s0">&lt;version&gt;</span><span class="s3">3.0.2</span><span class="s0">&lt;/version&gt;</span>
+                <span class="s0">&lt;/plugin&gt;</span>
+                <span class="s0">&lt;plugin&gt;</span>
+                    <span class="s0">&lt;artifactId&gt;</span><span class="s3">maven-compiler-plugin</span><span class="s0">&lt;/artifactId&gt;</span>
+                    <span class="s0">&lt;version&gt;</span><span class="s3">3.13.0</span><span class="s0">&lt;/version&gt;</span>
+                    <span class="s0">&lt;configuration&gt;</span>
+                        <span class="s0">&lt;source&gt;</span><span class="s3">17</span><span class="s0">&lt;/source&gt;</span>
+                        <span class="s0">&lt;target&gt;</span><span class="s3">17</span><span class="s0">&lt;/target&gt;</span>
+                        <span class="s0">&lt;compilerArgs&gt;</span>
+                            <span class="s0">&lt;arg&gt;</span><span class="s3">-Xlint:deprecation</span><span class="s0">&lt;/arg&gt;</span>
+                        <span class="s0">&lt;/compilerArgs&gt;</span>
+                    <span class="s0">&lt;/configuration&gt;</span>
+                <span class="s0">&lt;/plugin&gt;</span>
+                <span class="s0">&lt;plugin&gt;</span>
+                    <span class="s0">&lt;artifactId&gt;</span><span class="s3">maven-surefire-plugin</span><span class="s0">&lt;/artifactId&gt;</span>
+                    <span class="s0">&lt;version&gt;</span><span class="s3">2.22.1</span><span class="s0">&lt;/version&gt;</span>
+                <span class="s0">&lt;/plugin&gt;</span>
+                <span class="s0">&lt;plugin&gt;</span>
+                    <span class="s0">&lt;artifactId&gt;</span><span class="s3">maven-install-plugin</span><span class="s0">&lt;/artifactId&gt;</span>
+                    <span class="s0">&lt;version&gt;</span><span class="s3">2.5.2</span><span class="s0">&lt;/version&gt;</span>
+                <span class="s0">&lt;/plugin&gt;</span>
+                <span class="s0">&lt;plugin&gt;</span>
+                    <span class="s0">&lt;artifactId&gt;</span><span class="s3">maven-deploy-plugin</span><span class="s0">&lt;/artifactId&gt;</span>
+                    <span class="s0">&lt;version&gt;</span><span class="s3">2.8.2</span><span class="s0">&lt;/version&gt;</span>
+                <span class="s0">&lt;/plugin&gt;</span>
+                <span class="s0">&lt;plugin&gt;</span>
+                    <span class="s0">&lt;artifactId&gt;</span><span class="s3">maven-site-plugin</span><span class="s0">&lt;/artifactId&gt;</span>
+                    <span class="s0">&lt;version&gt;</span><span class="s3">3.7.1</span><span class="s0">&lt;/version&gt;</span>
+                <span class="s0">&lt;/plugin&gt;</span>
+                <span class="s0">&lt;plugin&gt;</span>
+                    <span class="s0">&lt;artifactId&gt;</span><span class="s3">maven-project-info-reports-plugin</span><span class="s0">&lt;/artifactId&gt;</span>
+                    <span class="s0">&lt;version&gt;</span><span class="s3">3.0.0</span><span class="s0">&lt;/version&gt;</span>
+                <span class="s0">&lt;/plugin&gt;</span>
+                <span class="s0">&lt;plugin&gt;</span>
+                    <span class="s0">&lt;groupId&gt;</span><span class="s3">org.codehaus.mojo</span><span class="s0">&lt;/groupId&gt;</span>
+                    <span class="s0">&lt;artifactId&gt;</span><span class="s3">exec-maven-plugin</span><span class="s0">&lt;/artifactId&gt;</span>
+                    <span class="s0">&lt;version&gt;</span><span class="s3">3.0.0</span><span class="s0">&lt;/version&gt;</span>
+                    <span class="s0">&lt;configuration&gt;</span>
+                        <span class="s0">&lt;mainClass&gt;</span><span class="s3">ru.itmo.client.main.MainApp</span><span class="s0">&lt;/mainClass&gt;</span>
+                    <span class="s0">&lt;/configuration&gt;</span>
+                <span class="s0">&lt;/plugin&gt;</span>
+                <span class="s0">&lt;plugin&gt;</span>
+                    <span class="s0">&lt;groupId&gt;</span><span class="s3">org.apache.maven.plugins</span><span class="s0">&lt;/groupId&gt;</span>
+                    <span class="s0">&lt;artifactId&gt;</span><span class="s3">maven-jar-plugin</span><span class="s0">&lt;/artifactId&gt;</span>
+                    <span class="s0">&lt;version&gt;</span><span class="s3">3.2.0</span><span class="s0">&lt;/version&gt;</span>
+                    <span class="s0">&lt;configuration&gt;</span>
+                        <span class="s0">&lt;archive&gt;</span>
+                            <span class="s0">&lt;manifest&gt;</span>
+                                <span class="s0">&lt;mainClass&gt;</span><span class="s3">ru.itmo.client.main.MainApp</span><span class="s0">&lt;/mainClass&gt;</span>
+                            <span class="s0">&lt;/manifest&gt;</span>
+                        <span class="s0">&lt;/archive&gt;</span>
+                    <span class="s0">&lt;/configuration&gt;</span>
+                <span class="s0">&lt;/plugin&gt;</span>
+                <span class="s0">&lt;plugin&gt;</span>
+                    <span class="s0">&lt;groupId&gt;</span><span class="s3">org.openjfx</span><span class="s0">&lt;/groupId&gt;</span>
+                    <span class="s0">&lt;artifactId&gt;</span><span class="s3">javafx-maven-plugin</span><span class="s0">&lt;/artifactId&gt;</span>
+                    <span class="s0">&lt;version&gt;</span><span class="s3">0.0.8</span><span class="s0">&lt;/version&gt;</span>
+                    <span class="s0">&lt;executions&gt;</span>
+                        <span class="s0">&lt;execution&gt;</span>
+                            <span class="s0">&lt;goals&gt;</span>
+                                <span class="s0">&lt;goal&gt;</span><span class="s3">run</span><span class="s0">&lt;/goal&gt;</span>
+                            <span class="s0">&lt;/goals&gt;</span>
+                        <span class="s0">&lt;/execution&gt;</span>
+                    <span class="s0">&lt;/executions&gt;</span>
+                    <span class="s0">&lt;configuration&gt;</span>
+                        <span class="s0">&lt;mainClass&gt;</span><span class="s3">ru.itmo.client.main.MainApp</span><span class="s0">&lt;/mainClass&gt;</span>
+                    <span class="s0">&lt;/configuration&gt;</span>
+                <span class="s0">&lt;/plugin&gt;</span>
+            <span class="s0">&lt;/plugins&gt;</span>
+        <span class="s0">&lt;/pluginManagement&gt;</span>
+    <span class="s0">&lt;/build&gt;</span>
+<span class="s0">&lt;/project&gt;</span></pre>
+</body>
+</html>

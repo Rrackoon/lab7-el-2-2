@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ru.itmo.client.controller.RegisterCont"
+            stylesheets="@../css/Style.css">
+
+    <top>
+        <Label text="%register.title" style="-fx-font-size: 24px; -fx-padding: 10px;"/>
+    </top>
+
+    <center>
+        <GridPane hgap="10" vgap="10">
+            <Label text="%register.username"/>
+            <TextField fx:id="usernameField"/>
+
+            <Label text="%register.password" GridPane.rowIndex="1"/>
+            <PasswordField fx:id="passwordField" GridPane.rowIndex="1"/>
+
+            <Label text="%register.confirm.password" GridPane.rowIndex="2"/>
+            <PasswordField fx:id="confirmPasswordField" GridPane.rowIndex="2"/>
+        </GridPane>
+    </center>
+
+    <bottom>
+        <VBox spacing="10">
+            <HBox spacing="10" alignment="CENTER" style="-fx-padding: 10px;">
+                <Button text="%register.button" fx:id="registerButton" onAction="#handleRegister"/>
+                <Button text="%register.back.button" onAction="#handleBackToLogin"/>
+            </HBox>
+            <TextArea fx:id="messageOutput" editable="false" wrapText="true" prefRowCount="3"/>
+        </VBox>
+    </bottom>
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+</BorderPane>

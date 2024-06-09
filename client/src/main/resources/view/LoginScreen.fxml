@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="ru.itmo.client.controller.LoginCont"
+          stylesheets="@../css/Style.css">
+
+    <columnConstraints>
+        <ColumnConstraints hgrow="NEVER" />
+        <ColumnConstraints hgrow="SOMETIMES" />
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+    </rowConstraints>
+
+    <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" spacing="10" alignment="CENTER">
+        <Label text="%login.title" styleClass="title-label"/>
+        <TextField fx:id="usernameField" promptText="%login.username" styleClass="input-field"/>
+        <PasswordField fx:id="passwordField" promptText="%login.password" styleClass="input-field"/>
+        <Button fx:id="loginButton" text="%login.button" onAction="#handleLogin" styleClass="login-button"/>
+        <Button fx:id="registerButton" text="%login.register.button" onAction="#handleRegister" styleClass="register-button"/>
+        <TextArea fx:id="messageOutput" editable="false" wrapText="true" prefRowCount="3" styleClass="message-output"/>
+    </VBox>
+
+</GridPane>

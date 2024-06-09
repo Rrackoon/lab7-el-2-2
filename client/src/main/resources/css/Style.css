@@ -1,0 +1,168 @@
+/* Основные стили для всего приложения */
+.root {
+    -webkit-font-smoothing: antialiased;
+    -fx-font-family: ui-sans-serif, -apple-system, system-ui, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif, Helvetica, "Apple Color Emoji", Arial, "Segoe UI Emoji", "Segoe UI Symbol";
+    -fx-background-color: #F0F4F8;
+    box-sizing: border-box;
+}
+
+/* Стили для верхней панели */
+.header-bar {
+    -fx-background-color: #2E3B4E;
+    -fx-padding: 10px;
+    border-bottom-color: #E3E3E3;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+.help-button {
+    -fx-background-color: #AB68FF;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-border-radius: 50%;
+}
+
+.filter-checkbox {
+    -fx-text-fill: #ECECEC;
+    -fx-font-size: 14px;
+}
+
+.user-info {
+    -fx-text-fill: #ECECEC;
+    -fx-font-size: 14px;
+    -fx-padding: 5px 10px;
+    -fx-background-color: #2F2F2F;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Стили для таблицы */
+.table-view {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #DFE6E9;
+    -fx-border-width: 1px;
+    -fx-padding: 10px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.5, 0, 0);
+}
+
+.table-column {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #2E3B4E;
+    -fx-font-size: 14px;
+}
+
+/* Стили для панели кнопок */
+.button-bar {
+    -fx-background-color: #2E3B4E;
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+}
+
+.button-add {
+    -fx-background-color: #4CAF50; /* Зеленый */
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+}
+
+.button-update {
+    -fx-background-color: #2196F3; /* Синий */
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+}
+
+.button-delete {
+    -fx-background-color: #F44336; /* Красный */
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+}
+
+.button-clear {
+    -fx-background-color: #FF9800; /* Оранжевый */
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+}
+
+.button-add-if-min {
+    -fx-background-color: #4CAF50; /* Зеленый */
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+}
+
+.button-sum-of-price {
+    -fx-background-color: #2196F3; /* Синий */
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+}
+
+.button-execute-script {
+    -fx-background-color: #FF5722; /* Оранжевый */
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+}
+
+.button-add:hover {
+    -fx-background-color: #45A049;
+}
+
+.button-update:hover {
+    -fx-background-color: #1E88E5;
+}
+
+.button-delete:hover {
+    -fx-background-color: #E53935;
+}
+
+.button-clear:hover {
+    -fx-background-color: #FB8C00;
+}
+
+/* Стили для панели с деталями */
+.details-pane {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 20px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.5, 0, 0);
+}
+
+.details-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #2E3B4E;
+}
+
+.details-value {
+    -fx-font-size: 14px;
+    -fx-text-fill: #2E3B4E;
+}
+
+/* Стили для кнопки помощи */
+.help-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 50%;
+    -fx-font-size: 14px;
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 10px;
+}
+.main-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 0;
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.itmo.client.controller.RootLayoutController"
+            stylesheets="@../css/Style.css">
+    <top>
+        <MenuBar styleClass="menu-bar">
+            <Menu text="%menu.file" styleClass="menu">
+                <MenuItem text="%menu.file.exit" onAction="#handleExit" styleClass="menu-item"/>
+            </Menu>
+            <Menu text="%menu.help" styleClass="menu">
+                <MenuItem text="%menu.help.about" onAction="#handleAbout" styleClass="menu-item"/>
+            </Menu>
+        </MenuBar>
+    </top>
+</BorderPane>
