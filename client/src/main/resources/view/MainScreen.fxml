@@ -9,7 +9,7 @@
             stylesheets="@../css/Style.css">
     <top>
         <HBox spacing="10" alignment="CENTER_LEFT" styleClass="header-bar">
-            <Button fx:id="helpButton" text="?" onAction="#handleHelp" styleClass="help-button"/>
+            <Button fx:id="helpButton" text="Помощь" onAction="#handleHelp" styleClass="help-button"/>
             <HBox spacing="10" alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                 <Label text="%main.user.info" styleClass="user-info"/>
                 <Label fx:id="userInfoLabel" styleClass="user-info"/>
@@ -32,8 +32,8 @@
                         <TableColumn fx:id="personName" text="%main.personName" styleClass="table-column"/>
                         <TableColumn fx:id="columnPassportID" text="%main.column.passportID" styleClass="table-column"/>
                         <TableColumn fx:id="columnHairColor" text="%main.column.hairColor" styleClass="table-column"/>
-                        <TableColumn fx:id="userIdColumn" text="%main.user.id" styleClass="table-column"/>
                         <TableColumn fx:id="locationColumn" text="%main.column.location" styleClass="table-column"/>
+                        <TableColumn fx:id="userIdColumn" text="%main.user.id" styleClass="table-column"/>
                     </columns>
                 </TableView>
             </ScrollPane>
@@ -49,36 +49,4 @@
             <Button text="%main.executeScript.button" fx:id="executeScriptButton" onAction="#handleExecuteScript" styleClass="button-execute-script"/>
         </HBox>
     </bottom>
-    <right>
-        <VBox spacing="10" styleClass="details-pane" VBox.vgrow="ALWAYS">
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
-            </padding>
-            <GridPane hgap="10" vgap="10">
-                <children>
-                    <Label text="%main.name" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="details-label"/>
-                    <Label fx:id="nameLabel" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="details-value"/>
-                    <Label text="%main.coordinates" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="details-label"/>
-                    <Label fx:id="coordinatesLabel" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="details-value"/>
-                    <Label text="%main.creationDate" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="details-label"/>
-                    <Label fx:id="creationDateLabel" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="details-value"/>
-                    <Label text="%main.studentsCount" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="details-label"/>
-                    <Label fx:id="studentsCountLabel" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="details-value"/>
-                    <Label text="%main.expelledStudents" GridPane.rowIndex="4" GridPane.columnIndex="0" styleClass="details-label"/>
-                    <Label fx:id="expelledStudentsLabel" GridPane.rowIndex="4" GridPane.columnIndex="1" styleClass="details-value"/>
-                    <Label text="%main.shouldBeExpelled" GridPane.rowIndex="5" GridPane.columnIndex="0" styleClass="details-label"/>
-                    <Label fx:id="shouldBeExpelledLabel" GridPane.rowIndex="5" GridPane.columnIndex="1" styleClass="details-value"/>
-                    <Label text="%main.formOfEducation" GridPane.rowIndex="6" GridPane.columnIndex="0" styleClass="details-label"/>
-                    <Label fx:id="formOfEducationLabel" GridPane.rowIndex="6" GridPane.columnIndex="1" styleClass="details-value"/>
-                    <Label text="%main.personName" GridPane.rowIndex="7" GridPane.columnIndex="0" styleClass="details-label"/>
-                    <Label fx:id="personNameLabel" GridPane.rowIndex="7" GridPane.columnIndex="1" styleClass="details-value"/>
-                    <Label text="%main.column.passportID" GridPane.rowIndex="8" GridPane.columnIndex="0" styleClass="details-label"/>
-                    <Label fx:id="passportIDLabel" GridPane.rowIndex="8" GridPane.columnIndex="1" styleClass="details-value"/>
-                    <Label text="%main.column.hairColor" GridPane.rowIndex="9" GridPane.columnIndex="0" styleClass="details-label"/>
-                    <Label fx:id="hairColorLabel" GridPane.rowIndex="9" GridPane.columnIndex="1" styleClass="details-value"/>
-                    <Label text="User ID" GridPane.rowIndex="14" GridPane.columnIndex="0" styleClass="details-label"/>
-                </children>
-            </GridPane>
-        </VBox>
-    </right>
 </BorderPane>
