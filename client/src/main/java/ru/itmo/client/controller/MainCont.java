@@ -5,7 +5,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -28,19 +27,13 @@ import ru.itmo.common.models.StudyGroup;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
-
-import static ru.itmo.client.main.MainApp.showAlert;
 
 public class MainCont {
     StudyGroup studyGroup;
     @FXML
     public Button helpButton;
-    @FXML
-    public CheckBox filterCheckBox;
     @FXML
     public Label userInfoLabel;
     @Setter
@@ -75,10 +68,11 @@ public class MainCont {
     @FXML
     private TableColumn<StudyGroup, String> columnHairColor;
     @FXML
+    private TableColumn<StudyGroup, String> locationColumn;
+    @FXML
     private TableColumn<StudyGroup, Long> userIdColumn;
 
-    @FXML
-    private TableColumn<StudyGroup, Integer> locationColumn;
+
     @FXML
     private TextField locationNameField;
     @FXML
@@ -132,6 +126,9 @@ public class MainCont {
     private Stage primaryStage;
 
     private ObservableList<StudyGroup> studyGroupData = FXCollections.observableArrayList();
+    private Thread fetchThread;
+    private boolean fetchThreadRunning = false;
+
 
     @FXML
     private void initialize() {
@@ -148,8 +145,8 @@ public class MainCont {
         personName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGroupAdmin().getName()));
         columnPassportID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGroupAdmin().getPassportID()));
         columnHairColor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGroupAdmin().getHairColor().toString()));
-        userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
-        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        locationColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGroupAdmin().getLocation().toString()));
+        userIdColumn.setCellValueFactory(new PropertyValueFactory<>("login"));
         dataTable.setItems(studyGroupData);
     }
 
@@ -208,6 +205,52 @@ public class MainCont {
             new Thread(task).start();
         }
     }
+    public void fetchStudyGroup() {
+        Task<ObservableList<StudyGroup>> task = new Task<>() {
+            @Override
+            protected ObservableList<StudyGroup> call() {
+                List<StudyGroup> tickets = runner.fetchStudyGroups();
+                if (tickets == null) {
+                    return null;
+                }
+                return FXCollections.observableArrayList(tickets);
+            }
+
+            @Override
+            protected void succeeded() {
+                ObservableList<StudyGroup> tickets = getValue();
+                if (tickets != null && !tickets.equals(studyGroupData)) {
+                    Platform.runLater(() -> {
+                        studyGroupData.setAll(tickets);
+                        dataTable.setItems(studyGroupData);
+                        dataTable.refresh();
+                        dataTable.sort();
+                    });
+                }
+            }
+
+            @Override
+            protected void failed() {
+                Platform.runLater(() -> showAlert("Error",
+                        bundle.getString("ticket.fetch.failed"),
+                        getException().getMessage()));
+            }
+        };
+
+        startFectchStudyGroup(task);
+    }
+
+    private void startFectchStudyGroup(Task<ObservableList<StudyGroup>> task) {
+        fetchThread = new Thread(task);
+        fetchThread.setDaemon(true);
+        fetchThread.start();
+        fetchThreadRunning = true;
+
+        task.setOnSucceeded(event -> fetchThreadRunning = false);
+        task.setOnFailed(event -> fetchThreadRunning = false);
+        task.setOnCancelled(event -> fetchThreadRunning = false);
+    }
+
     @FXML
     private void handleUpdate() {
         StudyGroup selectedStudyGroup = dataTable.getSelectionModel().getSelectedItem();
@@ -372,6 +415,7 @@ public class MainCont {
                     Runner.ExitCode exitCode = getValue();
                     Platform.runLater(() -> {
                         if (exitCode == Runner.ExitCode.OK) {
+                            fetchStudyGroup();
                             showAlert("Script Execution", "The script was executed successfully.", "");
                         } else {
                             showAlert("Script Execution", "The script execution failed.", "");
@@ -428,33 +472,28 @@ public class MainCont {
     }
 
     @FXML
-    private void handleHelp(ActionEvent actionEvent) {
-        Task<Response> task = new Task<>() {
-            @Override
-            protected Response call() throws Exception {
-                CommandShallow helpCommand = new CommandShallow("help", null, null, runner.getLogin(), runner.getPassword());
-                return runner.sendShallow(helpCommand);
-            }
+    private void handleHelp() {
+        // Display help dialog or message
+        String helpMessage = bundle.getString("help.general");
 
-            @Override
-            protected void succeeded() {
-                Response response = getValue();
-                Platform.runLater(() -> {
-                    if (response != null && response.isSuccess()) {
-                        showHelpDialog(response.getData().toString());
-                    } else {
-                        showAlert("Error", "Failed to fetch help", response != null ? response.getData().toString() : "Unknown error");
-                    }
-                });
-            }
+        Stage helpStage = new Stage();
+        helpStage.initModality(Modality.APPLICATION_MODAL);
+        helpStage.setTitle(bundle.getString("help.title"));
 
-            @Override
-            protected void failed() {
-                Platform.runLater(() -> showAlert("Error", "Failed to fetch help", getException().getMessage()));
-            }
-        };
+        TextArea helpTextArea = new TextArea();
+        helpTextArea.setEditable(false);
+        helpTextArea.setWrapText(true);
+        helpTextArea.setText(helpMessage);
+        Button closeButton = new Button(bundle.getString("help.close.button"));
+        closeButton.setOnAction(event -> helpStage.close());
 
-        new Thread(task).start();
+        VBox vbox = new VBox(helpTextArea, closeButton);
+        vbox.setSpacing(10);
+        vbox.setPadding(new Insets(10));
+
+        Scene scene = new Scene(vbox, 400, 300);
+        helpStage.setScene(scene);
+        helpStage.show();
     }
 
     private void showHelpDialog(String helpMessage) {
@@ -499,5 +538,12 @@ public class MainCont {
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+    public void setUserInfo() {
+        String userId = runner.getLogin();
+        String username = runner.getCurrentUsername();
+        Platform.runLater(() -> userInfoLabel.setText(String.format("%s %s, %s %s",
+                bundle.getString("main.user.info"), username,
+                bundle.getString("main.user.info.id"), userId)));
     }
 }

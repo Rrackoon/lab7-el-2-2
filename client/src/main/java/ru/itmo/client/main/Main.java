@@ -41,7 +41,7 @@ public class Main  {
         Printer printer = new StandardPrinter();
         IOProvider provider = new IOProvider(scanner, printer);
         CommandManager commandmanager = new CommandManager(provider);
-        UDPConnector connector = new UDPConnector("localhost", 1234);
+        UDPConnector connector = new UDPConnector("localhost", 3940);
         Console console = new Console(commandmanager, provider);
         String[] comnames = {"help", "info", "show", "add", "update", "remove_by_id", "clear",
                 "execute_script", "exit", "add_if_min", "count_less_than_group_admin", "update",

@@ -85,6 +85,10 @@ public class StudyGroupCollectionManager extends CollectionManager<StudyGroup> {
         return databaseConnector.checkOwnership(id, login);
     }
 
+    @Override
+    public void setId(StudyGroup element, int id) {
+        element.setId(id);
+    }
     public void saveToDatabase() {
         List<StudyGroup> collection = getCollection();
         try {
@@ -110,4 +114,5 @@ public class StudyGroupCollectionManager extends CollectionManager<StudyGroup> {
     public DatabaseConnector getDatabaseConnector() {
         return databaseConnector;
     }
+
 }

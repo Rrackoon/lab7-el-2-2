@@ -17,6 +17,7 @@ import ru.itmo.common.interfaces.Printer;
 import ru.itmo.common.managers.CommandManager;
 import ru.itmo.common.models.StudyGroup;
 import ru.itmo.common.utility.IOProvider;
+import ru.itmo.common.utility.SGParser;
 import ru.itmo.common.utility.StandardPrinter;
 
 import ru.itmo.common.interfaces.Accessible;
@@ -91,7 +92,7 @@ public class Runner {
     }
 
     private UDPConnector initializeUDPConnector() {
-        return new UDPConnector("localhost", 3940);
+        return new UDPConnector("localhost", 1234);
     }
 
     public Response sendShallow(CommandShallow shallow) throws IOException {
@@ -123,6 +124,7 @@ public class Runner {
         CommandShallow shallow = new CommandShallow("show", null, null, login, password);
         try {
             Response response = sendShallow(shallow);
+            System.out.println(response);
             return (List<StudyGroup>) response.getData();
         } catch (IOException e) {
             logger.error("Fetching study groups failed", e);
@@ -135,7 +137,7 @@ public class Runner {
         try {
             Response response = sendShallow(shallow);
             if (response.isSuccess()) {
-                studyGroup.setID((int) Long.parseLong(response.getData().toString()));
+                studyGroup.setId(Long.parseLong(response.getData().toString()));
                 return true;
             } else {
                 return false;
@@ -147,7 +149,7 @@ public class Runner {
     }
 
     public void updateStudyGroup(StudyGroup studyGroup) {
-        CommandShallow shallow = new CommandShallow("update", null, studyGroup, login, password);
+        CommandShallow shallow = new CommandShallow("update", studyGroup.getId(), studyGroup, login, password);
         try {
             sendShallow(shallow);
         } catch (IOException e) {
@@ -195,8 +197,14 @@ public class Runner {
                 String[] commandParts = line.split("\\s+", 2);
                 String commandName = commandParts[0];
                 String commandArgument = commandParts.length > 1 ? commandParts[1].trim() : null;
-
-                CommandShallow shallow = new CommandShallow(commandName, commandArgument != null ? new String[]{commandArgument} : null, null, login, password);
+                CommandShallow shallow;
+                if (commandName.equals("add") || commandName.equals("update") || commandName.equals("add_if_min")) {
+                    StudyGroup newGroup = new SGParser(scriptScanner, new StandardPrinter()).parseStudyGroup();
+                    newGroup.setLogin(getLogin());
+                    shallow = new CommandShallow(commandName, commandArgument != null ? new String[]{commandArgument} : null, newGroup, login, password);
+                } else {
+                    shallow = new CommandShallow(commandName, commandArgument != null ? new String[]{commandArgument} : null, null, login, password);
+                }
                 Response response = sendShallow(shallow);
 
                 if (!response.isSuccess()) {

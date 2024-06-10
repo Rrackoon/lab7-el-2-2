@@ -10,7 +10,6 @@
     <top>
         <HBox spacing="10" alignment="CENTER_LEFT" styleClass="header-bar">
             <Button fx:id="helpButton" text="?" onAction="#handleHelp" styleClass="help-button"/>
-            <CheckBox fx:id="filterCheckBox" text="%main.filter.checkbox" styleClass="filter-checkbox"/>
             <HBox spacing="10" alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                 <Label text="%main.user.info" styleClass="user-info"/>
                 <Label fx:id="userInfoLabel" styleClass="user-info"/>

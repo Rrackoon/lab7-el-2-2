@@ -23,10 +23,6 @@
     -fx-border-radius: 50%;
 }
 
-.filter-checkbox {
-    -fx-text-fill: #ECECEC;
-    -fx-font-size: 14px;
-}
 
 .user-info {
     -fx-text-fill: #ECECEC;

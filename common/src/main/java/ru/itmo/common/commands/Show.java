@@ -15,10 +15,7 @@ public class Show extends Command {
     @Override
     public Response execute(CommandContext context) {
         CollectionManager<StudyGroup> collectionManager = context.getCollectionManager();
-        String response = String.join("\n", collectionManager.getCollection().stream()
-                .map(StudyGroup::toString)
-                .toArray(String[]::new));
 
-        return new Response(true, response);
+        return new Response(true, null, collectionManager.getCollection());
     }
 }

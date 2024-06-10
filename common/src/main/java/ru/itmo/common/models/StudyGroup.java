@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 public class StudyGroup implements Serializable, Comparable<StudyGroup> {
     @Serial
     private static final long serialVersionUID = 1L;
-    private static int ID = 0; // Присваивание максимального ID
 
     private long id; // Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     @NonNull
@@ -31,10 +30,6 @@ public class StudyGroup implements Serializable, Comparable<StudyGroup> {
     @NonNull
     private Person groupAdmin; // Поле не может быть null
     private String login;
-
-    public static void setID(int newID) {
-        ID = newID;
-    }
 
     public static boolean validateName(String name) {
         return name != null && !name.isEmpty();
@@ -71,14 +66,6 @@ public class StudyGroup implements Serializable, Comparable<StudyGroup> {
         this.shouldBeExpelled = studyGroup.getShouldBeExpelled();
         this.formOfEducation = studyGroup.getFormOfEducation();
         this.groupAdmin = studyGroup.getGroupAdmin();
-    }
-
-    public void setId(long id) { // Добавлен метод setId
-        this.id = id;
-    }
-
-    public static int getId() {
-        return ID;
     }
 
     @Override

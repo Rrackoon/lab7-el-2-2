@@ -1,17 +1,21 @@
 package ru.itmo.common.utility;
 
+import ru.itmo.common.commands.base.Response;
+
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 public class ByteActions {
 
-    // Метод для объединения строк в один ByteBuffer
-    public static ByteBuffer joinStrings(String[] response) {
+    // Метод для объединения объектов Response в один ByteBuffer
+    public static ByteBuffer joinResponses(List<Response> responses) {
         // Вычисление общей длины всех строк
         int totalLength = 0;
-        for (String str : response) {
-            if (!str.isEmpty()) {
-                totalLength += str.getBytes(StandardCharsets.UTF_8).length + 1; // +1 для символа новой строки
+        for (Response response : responses) {
+            String responseString = response.toString();
+            if (!responseString.isEmpty()) {
+                totalLength += responseString.getBytes(StandardCharsets.UTF_8).length + 1; // +1 для символа новой строки
             }
         }
 
@@ -20,11 +24,12 @@ public class ByteActions {
 
         // Сборка всех строк в единый буфер
         StringBuilder combinedResponse = new StringBuilder();
-        for (String str : response) {
-            if (!str.isEmpty()) {
-                buffer.put(str.getBytes(StandardCharsets.UTF_8));
+        for (Response response : responses) {
+            String responseString = response.toString();
+            if (!responseString.isEmpty()) {
+                buffer.put(responseString.getBytes(StandardCharsets.UTF_8));
                 buffer.put((byte) '\n'); // Добавление символа новой строки
-                combinedResponse.append(str).append("\n");
+                combinedResponse.append(responseString).append("\n");
             }
         }
 

@@ -73,6 +73,9 @@ public class MainApp extends Application {
             controller.setRunner(runner);
             controller.setBundle(bundle);
             controller.setPrimaryStage(primaryStage);
+
+            controller.fetchStudyGroup();
+            controller.setUserInfo();
         } catch (Exception e) {
             e.printStackTrace();
         }

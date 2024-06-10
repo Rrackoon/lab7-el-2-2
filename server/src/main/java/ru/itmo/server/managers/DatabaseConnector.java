@@ -52,7 +52,7 @@ public class DatabaseConnector implements Accessible {
     public static int saveSingle(StudyGroup studyGroup) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(SAVE_SINGLE_QUERY);
 
-        ps.setString(1, (studyGroup.getName() != null ? studyGroup.getName() : "NULL"));
+        ps.setString(1, studyGroup.getName());
         ps.setInt(2, studyGroup.getCoordinates().getX());
         ps.setLong(3, studyGroup.getCoordinates().getY());
         ps.setTimestamp(4, Timestamp.valueOf(studyGroup.getCreationDate()));

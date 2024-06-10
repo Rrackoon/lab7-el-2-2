@@ -28,10 +28,12 @@ public abstract class CollectionManager<T extends Comparable<T>> {
     public int push(T element) throws Exception {
         int id=saveToDatabase(element);
         if ( id >0 ) {
+            setId(element, id);
             collection.add(element);
         }
         return id;
     }
+
 
     public void remove(long id, String login) throws Exception {
         T element = get(id);
@@ -112,4 +114,5 @@ public abstract class CollectionManager<T extends Comparable<T>> {
     protected abstract boolean clearDatabase() throws Exception;
 
     protected abstract boolean checkOwnerShip(long id, String login);
+    public abstract void setId(T element, int id);
 }
