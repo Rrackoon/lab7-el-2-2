@@ -1,0 +1,34 @@
+/* Основные стили для экрана логина */
+.root {
+    -webkit-font-smoothing: antialiased;
+    -fx-font-family: ui-sans-serif, -apple-system, system-ui, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif, Helvetica, "Apple Color Emoji", Arial, "Segoe UI Emoji", "Segoe UI Symbol";
+    -fx-background-color: #FFFAE5; /* Светло-желтый цвет */
+    -fx-background-image: url("/images/image.png"); /* Замените на путь к вашему изображению */
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+}
+
+.login-pane {
+    -fx-background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный белый фон */
+    -fx-padding: 20px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.5, 0, 0);
+}
+
+.login-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #2E3B4E;
+}
+
+.login-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+}
+
+.login-button:hover {
+    -fx-background-color: #45A049;
+}

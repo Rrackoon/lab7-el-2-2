@@ -2,13 +2,15 @@
 .root {
     -webkit-font-smoothing: antialiased;
     -fx-font-family: ui-sans-serif, -apple-system, system-ui, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif, Helvetica, "Apple Color Emoji", Arial, "Segoe UI Emoji", "Segoe UI Symbol";
-    -fx-background-color: #F0F4F8;
+    -fx-background-color: #FFFAE5; /* Светло-желтый цвет */
+    -fx-background-image: url("/images/image.png"); /* Замените на путь к вашему изображению */
+
     box-sizing: border-box;
 }
 
 /* Стили для верхней панели */
 .header-bar {
-    -fx-background-color: #2E3B4E;
+    -fx-background-color: #1A237E; /* Темно-синий цвет */
     -fx-padding: 10px;
     border-bottom-color: #E3E3E3;
     border-bottom-style: solid;
@@ -23,25 +25,40 @@
     -fx-border-radius: 50%;
 }
 
-
 .user-info {
     -fx-text-fill: #ECECEC;
     -fx-font-size: 14px;
     -fx-padding: 5px 10px;
     -fx-background-color: #2F2F2F;
     -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
 }
+.button-bar {
+    -fx-background-color: #1A237E; /* Dark blue color */
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+}
+
+/* Show panel button */
+.show-panel-button {
+    -fx-background-color: #1A237E;
+    -fx-text-fill: white;
+    -fx-pref-width: 40;
+}
+
 
 /* Стили для таблицы */
 .table-view {
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: transparent; /* Прозрачный фон, чтобы был виден фон родительского контейнера */
     -fx-border-color: #DFE6E9;
     -fx-border-width: 1px;
     -fx-padding: 10px;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.5, 0, 0);
+}
+
+.table-row-cell {
+    -fx-background-color: #FFFAE5; /* Светло-желтый цвет для строк таблицы */
 }
 
 .table-column {
@@ -52,13 +69,13 @@
 
 /* Стили для панели кнопок */
 .button-bar {
-    -fx-background-color: #2E3B4E;
+    -fx-background-color: #1A237E; /* Темно-синий цвет */
     -fx-padding: 10px;
     -fx-spacing: 10px;
 }
 
 .button-add {
-    -fx-background-color: #4CAF50; /* Зеленый */
+    -fx-background-color: #4CAF50;
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 14px;
     -fx-padding: 10px;
@@ -66,7 +83,7 @@
 }
 
 .button-update {
-    -fx-background-color: #2196F3; /* Синий */
+    -fx-background-color: #2196F3;
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 14px;
     -fx-padding: 10px;
@@ -74,7 +91,7 @@
 }
 
 .button-delete {
-    -fx-background-color: #F44336; /* Красный */
+    -fx-background-color: #F44336;
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 14px;
     -fx-padding: 10px;
@@ -82,7 +99,7 @@
 }
 
 .button-clear {
-    -fx-background-color: #FF9800; /* Оранжевый */
+    -fx-background-color: #FF9800;
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 14px;
     -fx-padding: 10px;
@@ -90,15 +107,7 @@
 }
 
 .button-add-if-min {
-    -fx-background-color: #4CAF50; /* Зеленый */
-    -fx-text-fill: #FFFFFF;
-    -fx-font-size: 14px;
-    -fx-padding: 10px;
-    -fx-border-radius: 5px;
-}
-
-.button-sum-of-price {
-    -fx-background-color: #2196F3; /* Синий */
+    -fx-background-color: #4CAF50;
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 14px;
     -fx-padding: 10px;
@@ -106,7 +115,7 @@
 }
 
 .button-execute-script {
-    -fx-background-color: #FF5722; /* Оранжевый */
+    -fx-background-color: #FF5722;
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 14px;
     -fx-padding: 10px;
@@ -131,32 +140,18 @@
 
 /* Стили для панели с деталями */
 .details-pane {
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: #FFFAE5; /* Светло-желтый цвет */
     -fx-padding: 20px;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.5, 0, 0);
 }
 
-.details-label {
+.details-label, .details-value {
     -fx-font-size: 14px;
     -fx-text-fill: #2E3B4E;
 }
 
-.details-value {
-    -fx-font-size: 14px;
-    -fx-text-fill: #2E3B4E;
-}
-
-/* Стили для кнопки помощи */
-.help-button {
-    -fx-background-color: transparent;
-    -fx-border-color: #FFFFFF;
-    -fx-border-radius: 50%;
-    -fx-font-size: 14px;
-    -fx-text-fill: #FFFFFF;
-    -fx-padding: 10px;
-}
 .main-title {
     -fx-font-size: 24px;
     -fx-font-weight: bold;

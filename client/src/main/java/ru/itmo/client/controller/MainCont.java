@@ -1,5 +1,6 @@
 package ru.itmo.client.controller;
 
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -9,8 +10,12 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -46,7 +51,7 @@ public class MainCont {
     @FXML
     private TableView<StudyGroup> dataTable;
     @FXML
-    private TableColumn<StudyGroup, Long> idColumn; // Замените Integer на Long
+    private TableColumn<StudyGroup, Long> idColumn;
     @FXML
     private TableColumn<StudyGroup, String> nameColumn;
     @FXML
@@ -71,7 +76,6 @@ public class MainCont {
     private TableColumn<StudyGroup, String> locationColumn;
     @FXML
     private TableColumn<StudyGroup, Long> userIdColumn;
-
 
     @FXML
     private TextField locationNameField;
@@ -129,7 +133,58 @@ public class MainCont {
     private Thread fetchThread;
     private boolean fetchThreadRunning = false;
 
+    @FXML
+    private Canvas canvas;
 
+    private DataVisualisationCont dataVisualisationCont;
+    @FXML
+    private BorderPane mainPane;
+
+    @FXML
+    private VBox leftPanel;
+    @FXML
+    private Button toggleButton;
+    @FXML
+    private Button showPanelButton;
+    @FXML
+    private StackPane buttonStack;
+
+    private boolean isPanelVisible = true;
+    @FXML
+    private void toggleLeftPanel() {
+        TranslateTransition transition = new TranslateTransition(Duration.millis(300), leftPanel);
+        if (isPanelVisible) {
+            transition.setToX(-leftPanel.getWidth());
+            isPanelVisible = false;
+            showPanelButton.setVisible(true);
+        } else {
+            transition.setToX(0);
+            isPanelVisible = true;
+            showPanelButton.setVisible(false);
+        }
+        transition.setOnFinished(event -> {
+            leftPanel.setVisible(isPanelVisible);
+            if (isPanelVisible) {
+                toggleButton.setText("❮");
+                leftPanel.setPrefWidth(200); // Устанавливаем ширину панели, когда она видима
+                mainPane.setLeft(leftPanel);
+            } else {
+                toggleButton.setText("❯");
+                leftPanel.setPrefWidth(50); // Устанавливаем узкую ширину панели, когда она скрыта
+                mainPane.setLeft(null);
+            }
+            resizeTable();
+        });
+        transition.play();
+    }
+
+    private void resizeTable() {
+        if (isPanelVisible) {
+            dataTable.setPrefWidth(mainPane.getWidth() - leftPanel.getPrefWidth() - buttonStack.getPrefWidth());
+        } else {
+            dataTable.setPrefWidth(mainPane.getWidth() - buttonStack.getPrefWidth());
+        }
+    }
     @FXML
     private void initialize() {
         // Инициализация столбцов таблицы
@@ -148,6 +203,18 @@ public class MainCont {
         locationColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGroupAdmin().getLocation().toString()));
         userIdColumn.setCellValueFactory(new PropertyValueFactory<>("login"));
         dataTable.setItems(studyGroupData);
+
+        // Инициализация DataVisualisationCont
+        dataVisualisationCont = new DataVisualisationCont();
+        dataVisualisationCont.setMainApp(mainApp);
+        dataVisualisationCont.setRunner(runner);
+        dataVisualisationCont.setMainController(this);
+
+        // Связываем canvas из FXML с контроллером визуализации
+        dataVisualisationCont.setCanvas(canvas);
+
+        // Скрываем кнопку выдвижения панели
+        showPanelButton.setVisible(false);
     }
 
     @FXML
@@ -159,10 +226,9 @@ public class MainCont {
             builder.login(runner.getLogin());
 
             Task<Boolean> task = new Task<>() {
-                @Override
                 protected Boolean call() {
                     try {
-                        StudyGroup studyGroup = builder.build();
+                        studyGroup = builder.build();
                         CommandShallow shallow = new CommandShallow("add", null, studyGroup, runner.getLogin(), runner.getPassword());
                         Response response = runner.sendShallow(shallow);
                         if (response == null || response.getData() == null) return false;
@@ -179,20 +245,9 @@ public class MainCont {
                     Boolean added = getValue();
                     if (added) {
                         Platform.runLater(() -> {
-                            StudyGroup newStudyGroup = builder.build();
+                            StudyGroup newStudyGroup = studyGroup;
                             dataTable.getItems().add(newStudyGroup);
-                            dataTable.refresh();
-                            dataTable.sort();
-
-                            Notifications.create()
-                                    .title("StudyGroup Added")
-                                    .text("The study group was successfully added.\nAssigned id: " + newStudyGroup.getId())
-                                    .hideAfter(Duration.seconds(3))
-                                    .position(Pos.BOTTOM_RIGHT)
-                                    .showInformation();
                         });
-                    } else {
-                        Platform.runLater(() -> showAlert("Error", "Failed to add study group", ""));
                     }
                 }
 
@@ -205,26 +260,29 @@ public class MainCont {
             new Thread(task).start();
         }
     }
+
     public void fetchStudyGroup() {
         Task<ObservableList<StudyGroup>> task = new Task<>() {
             @Override
             protected ObservableList<StudyGroup> call() {
-                List<StudyGroup> tickets = runner.fetchStudyGroups();
-                if (tickets == null) {
+                List<StudyGroup> studyGroups = runner.fetchStudyGroups();
+                if (studyGroups == null) {
                     return null;
                 }
-                return FXCollections.observableArrayList(tickets);
+                return FXCollections.observableArrayList(studyGroups);
             }
 
             @Override
             protected void succeeded() {
-                ObservableList<StudyGroup> tickets = getValue();
-                if (tickets != null && !tickets.equals(studyGroupData)) {
+                ObservableList<StudyGroup> studyGroups = getValue();
+                if (studyGroups != null && !studyGroups.equals(studyGroupData)) {
                     Platform.runLater(() -> {
-                        studyGroupData.setAll(tickets);
+                        studyGroupData.setAll(studyGroups);
                         dataTable.setItems(studyGroupData);
                         dataTable.refresh();
                         dataTable.sort();
+                        dataVisualisationCont.setStudyGroups(studyGroups);
+                        dataVisualisationCont.drawObjects(); // Перерисовка объектов после получения новых данных
                     });
                 }
             }
@@ -232,7 +290,7 @@ public class MainCont {
             @Override
             protected void failed() {
                 Platform.runLater(() -> showAlert("Error",
-                        bundle.getString("ticket.fetch.failed"),
+                        bundle.getString("studyGroup.fetch.failed"),
                         getException().getMessage()));
             }
         };
@@ -272,6 +330,7 @@ public class MainCont {
                         Platform.runLater(() -> {
                             showStudyGroupDetails(updatedStudyGroup);
                             dataTable.refresh();
+                            dataVisualisationCont.updateObject(updatedStudyGroup); // Обновление объекта в визуализации
                         });
                     }
 
@@ -305,6 +364,7 @@ public class MainCont {
                     Platform.runLater(() -> {
                         dataTable.getItems().remove(selectedIndex);
                         dataTable.refresh();
+                        dataVisualisationCont.removeObject(selectedStudyGroup); // Удаление объекта из визуализации
                     });
                 }
 
@@ -337,6 +397,7 @@ public class MainCont {
                         Platform.runLater(() -> {
                             dataTable.getItems().clear();
                             dataTable.refresh();
+                            dataVisualisationCont.drawObjects(); // Очистка визуализации
                         });
                     }
                 }
@@ -374,6 +435,7 @@ public class MainCont {
                             dataTable.getItems().add(newStudyGroup);
                             dataTable.refresh();
                             dataTable.sort();
+                            dataVisualisationCont.addObject(newStudyGroup); // Добавление объекта в визуализацию
 
                             Notifications.create()
                                     .title("StudyGroup Added")
@@ -396,7 +458,6 @@ public class MainCont {
             new Thread(task).start();
         }
     }
-
 
     @FXML
     private void handleExecuteScript() {
@@ -539,6 +600,7 @@ public class MainCont {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
     public void setUserInfo() {
         String userId = runner.getLogin();
         String username = runner.getCurrentUsername();
@@ -546,4 +608,6 @@ public class MainCont {
                 bundle.getString("main.user.info"), username,
                 bundle.getString("main.user.info.id"), userId)));
     }
+
+
 }

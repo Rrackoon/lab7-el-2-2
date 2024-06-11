@@ -5,27 +5,30 @@
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="ru.itmo.client.controller.LoginCont"
-          stylesheets="@../css/Style.css">
+          stylesheets="@../css/Style.css"
+          alignment="CENTER"
+          hgap="10" vgap="10"
+          styleClass="login-pane">
 
     <columnConstraints>
-        <ColumnConstraints hgrow="NEVER" />
-        <ColumnConstraints hgrow="SOMETIMES" />
+        <ColumnConstraints percentWidth="50"/>
+        <ColumnConstraints percentWidth="50"/>
     </columnConstraints>
 
     <rowConstraints>
-        <RowConstraints vgrow="SOMETIMES" />
-        <RowConstraints vgrow="SOMETIMES" />
-        <RowConstraints vgrow="SOMETIMES" />
-        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="ALWAYS"/>
+        <RowConstraints vgrow="SOMETIMES"/>
+        <RowConstraints vgrow="SOMETIMES"/>
+        <RowConstraints vgrow="SOMETIMES"/>
+        <RowConstraints vgrow="SOMETIMES"/>
     </rowConstraints>
 
-    <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" spacing="10" alignment="CENTER">
-        <Label text="%login.title" styleClass="title-label"/>
-        <TextField fx:id="usernameField" promptText="%login.username" styleClass="input-field"/>
-        <PasswordField fx:id="passwordField" promptText="%login.password" styleClass="input-field"/>
+    <Label text="%login.title" styleClass="title-label" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER"/>
+    <TextField fx:id="usernameField" promptText="%login.username" styleClass="input-field" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="2"/>
+    <PasswordField fx:id="passwordField" promptText="%login.password" styleClass="input-field" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="2"/>
+    <HBox spacing="10" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2">
         <Button fx:id="loginButton" text="%login.button" onAction="#handleLogin" styleClass="login-button"/>
         <Button fx:id="registerButton" text="%login.register.button" onAction="#handleRegister" styleClass="register-button"/>
-        <TextArea fx:id="messageOutput" editable="false" wrapText="true" prefRowCount="3" styleClass="message-output"/>
-    </VBox>
-
+    </HBox>
+    <TextArea fx:id="messageOutput" editable="false" wrapText="true" prefRowCount="3" styleClass="message-output" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="2"/>
 </GridPane>

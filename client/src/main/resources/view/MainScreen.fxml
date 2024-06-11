@@ -2,14 +2,17 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.canvas.Canvas?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ru.itmo.client.controller.MainCont"
-            stylesheets="@../css/Style.css">
+            fx:id="mainPane"
+            stylesheets="@../css/Style.css"
+            styleClass="main-screen">
     <top>
         <HBox spacing="10" alignment="CENTER_LEFT" styleClass="header-bar">
-            <Button fx:id="helpButton" text="Помощь" onAction="#handleHelp" styleClass="help-button"/>
+            <Button fx:id="helpButton" text="Помощь" onAction="#handleHelp" styleClass="help-button" prefWidth="80" prefHeight="25"/>
             <HBox spacing="10" alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                 <Label text="%main.user.info" styleClass="user-info"/>
                 <Label fx:id="userInfoLabel" styleClass="user-info"/>
@@ -17,36 +20,43 @@
         </HBox>
     </top>
     <center>
-        <VBox spacing="10" VBox.vgrow="ALWAYS">
-            <ScrollPane fitToWidth="true" fitToHeight="true" VBox.vgrow="ALWAYS">
-                <TableView fx:id="dataTable" styleClass="table-view" VBox.vgrow="ALWAYS">
-                    <columns>
-                        <TableColumn fx:id="idColumn" text="%main.id" styleClass="table-column"/>
-                        <TableColumn fx:id="nameColumn" text="%main.name" styleClass="table-column"/>
-                        <TableColumn fx:id="coordinatesColumn" text="%main.coordinates" styleClass="table-column"/>
-                        <TableColumn fx:id="creationDateColumn" text="%main.creationDate" styleClass="table-column"/>
-                        <TableColumn fx:id="studentsCountColumn" text="%main.studentsCount" styleClass="table-column"/>
-                        <TableColumn fx:id="expelledStudentsColumn" text="%main.expelledStudents" styleClass="table-column"/>
-                        <TableColumn fx:id="shouldBeExpelledColumn" text="%main.shouldBeExpelled" styleClass="table-column"/>
-                        <TableColumn fx:id="formOfEducationColumn" text="%main.formOfEducation" styleClass="table-column"/>
-                        <TableColumn fx:id="personName" text="%main.personName" styleClass="table-column"/>
-                        <TableColumn fx:id="columnPassportID" text="%main.column.passportID" styleClass="table-column"/>
-                        <TableColumn fx:id="columnHairColor" text="%main.column.hairColor" styleClass="table-column"/>
-                        <TableColumn fx:id="locationColumn" text="%main.column.location" styleClass="table-column"/>
-                        <TableColumn fx:id="userIdColumn" text="%main.user.id" styleClass="table-column"/>
-                    </columns>
-                </TableView>
-            </ScrollPane>
-        </VBox>
+        <SplitPane dividerPositions="0.15, 0.85">
+            <StackPane fx:id="buttonStack" prefWidth="50" styleClass="button-stack">
+                <Button fx:id="showPanelButton" text="❯" onAction="#toggleLeftPanel" styleClass="show-panel-button"/>
+            </StackPane>
+            <VBox spacing="10" VBox.vgrow="ALWAYS" prefWidth="400">
+                <ScrollPane fitToWidth="true" fitToHeight="true" VBox.vgrow="ALWAYS" style="-fx-background-color: #FFFAE5;">
+                    <TableView fx:id="dataTable" styleClass="table-view" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="idColumn" text="%main.id" styleClass="table-column"/>
+                            <TableColumn fx:id="nameColumn" text="%main.name" styleClass="table-column"/>
+                            <TableColumn fx:id="coordinatesColumn" text="%main.coordinates" styleClass="table-column"/>
+                            <TableColumn fx:id="creationDateColumn" text="%main.creationDate" styleClass="table-column"/>
+                            <TableColumn fx:id="studentsCountColumn" text="%main.studentsCount" styleClass="table-column"/>
+                            <TableColumn fx:id="expelledStudentsColumn" text="%main.expelledStudents" styleClass="table-column"/>
+                            <TableColumn fx:id="shouldBeExpelledColumn" text="%main.shouldBeExpelled" styleClass="table-column"/>
+                            <TableColumn fx:id="formOfEducationColumn" text="%main.formOfEducation" styleClass="table-column"/>
+                            <TableColumn fx:id="personName" text="%main.personName" styleClass="table-column"/>
+                            <TableColumn fx:id="columnPassportID" text="%main.column.passportID" styleClass="table-column"/>
+                            <TableColumn fx:id="columnHairColor" text="%main.column.hairColor" styleClass="table-column"/>
+                            <TableColumn fx:id="locationColumn" text="%main.column.location" styleClass="table-column"/>
+                            <TableColumn fx:id="userIdColumn" text="%main.user.id" styleClass="table-column"/>
+                        </columns>
+                    </TableView>
+                </ScrollPane>
+            </VBox>
+            <Canvas fx:id="canvas" width="800" height="600" style="-fx-background-color: #FFFAE5;" />
+        </SplitPane>
     </center>
-    <bottom>
-        <HBox spacing="10" alignment="CENTER" styleClass="button-bar">
-            <Button text="%main.add.button" fx:id="addButton" onAction="#handleAdd" styleClass="button-add"/>
-            <Button text="%main.update.button" fx:id="updateButton" onAction="#handleUpdate" styleClass="button-update"/>
-            <Button text="%main.delete.button" fx:id="deleteButton" onAction="#handleDelete" styleClass="button-delete"/>
-            <Button text="%main.clear.button" fx:id="clearButton" onAction="#handleClear" styleClass="button-clear"/>
-            <Button text="%main.addIfMin.button" fx:id="addIfMinButton" onAction="#handleAddIfMin" styleClass="button-add-if-min"/>
-            <Button text="%main.executeScript.button" fx:id="executeScriptButton" onAction="#handleExecuteScript" styleClass="button-execute-script"/>
-        </HBox>
-    </bottom>
+    <left>
+        <VBox fx:id="leftPanel" spacing="10" alignment="CENTER" styleClass="button-bar" style="-fx-background-color: #1A237E;" prefWidth="200">
+            <Button text="❮" fx:id="toggleButton" onAction="#toggleLeftPanel" />
+            <Button text="%main.add.button" fx:id="addButton" onAction="#handleAdd" styleClass="button-add" />
+            <Button text="%main.update.button" fx:id="updateButton" onAction="#handleUpdate" styleClass="button-update" />
+            <Button text="%main.delete.button" fx:id="deleteButton" onAction="#handleDelete" styleClass="button-delete" />
+            <Button text="%main.clear.button" fx:id="clearButton" onAction="#handleClear" styleClass="button-clear" />
+            <Button text="%main.addIfMin.button" fx:id="addIfMinButton" onAction="#handleAddIfMin" styleClass="button-add-if-min" />
+            <Button text="%main.executeScript.button" fx:id="executeScriptButton" onAction="#handleExecuteScript" styleClass="button-execute-script" />
+        </VBox>
+    </left>
 </BorderPane>
