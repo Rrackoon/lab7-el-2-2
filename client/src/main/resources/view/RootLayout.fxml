@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
+
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ru.itmo.client.controller.RootLayoutController"
             stylesheets="@../css/Style.css">
@@ -12,6 +13,12 @@
             </Menu>
             <Menu text="%menu.help" styleClass="menu">
                 <MenuItem text="%menu.help.about" onAction="#handleAbout" styleClass="menu-item"/>
+            </Menu>
+            <Menu text="%menu.language" styleClass="menu">
+                <MenuItem text="%language.russian" fx:id="menuItemRussian" styleClass="menu-item"/>
+                <MenuItem text="%language.croatian" fx:id="menuItemCroatian" styleClass="menu-item"/>
+                <MenuItem text="%language.serbian" fx:id="menuItemSerbian" styleClass="menu-item"/>
+                <MenuItem text="%language.spanish" fx:id="menuItemSpanish" styleClass="menu-item"/>
             </Menu>
         </MenuBar>
     </top>

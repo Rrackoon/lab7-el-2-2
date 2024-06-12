@@ -32,6 +32,7 @@ public class StudyGroupEditDialogCont {
     private TextField locationNameField;
     private Stage dialogStage;
     private StudyGroup.StudyGroupBuilder studyGroupBuilder;
+    private StudyGroup selectedGroup;
     private boolean okClicked = false;
 
     @FXML
@@ -44,8 +45,23 @@ public class StudyGroupEditDialogCont {
         this.dialogStage = dialogStage;
     }
 
-    public void setStudyGroupBuilder(StudyGroup.StudyGroupBuilder builder) {
+    public void setStudyGroupBuilder(StudyGroup.StudyGroupBuilder builder, StudyGroup selectedGroup) {
         this.studyGroupBuilder = builder;
+        this.selectedGroup = selectedGroup;
+        if (selectedGroup != null) {
+            nameField.setText(selectedGroup.getName());
+            coordinatesField.setText(selectedGroup.getCoordinates().getX() + ";" + selectedGroup.getCoordinates().getY());
+            studentsCountField.setText("" + selectedGroup.getStudentsCount());
+            expelledStudentsField.setText("" + selectedGroup.getExpelledStudents());
+            shouldBeExpelledField.setText("" + selectedGroup.getShouldBeExpelled());
+            formOfEducationField.setValue(selectedGroup.getFormOfEducation());
+            adminNameField.setText(selectedGroup.getGroupAdmin().getName());
+            passportIDField.setText(selectedGroup.getGroupAdmin().getPassportID());
+            hairColorField.setValue(selectedGroup.getGroupAdmin().getHairColor());
+            locationXField.setText("" + selectedGroup.getGroupAdmin().getLocation().getX());
+            locationYField.setText("" + selectedGroup.getGroupAdmin().getLocation().getY());
+            locationNameField.setText(selectedGroup.getGroupAdmin().getLocation().getName());
+        }
     }
 
     public boolean isOkClicked() {
@@ -57,7 +73,6 @@ public class StudyGroupEditDialogCont {
         if (isInputValid()) {
             studyGroupBuilder.name(nameField.getText());
 
-            // Добавляем проверку и парсинг координат
             String[] coordinates = coordinatesField.getText().split(";");
             if (coordinates.length == 2) {
                 try {

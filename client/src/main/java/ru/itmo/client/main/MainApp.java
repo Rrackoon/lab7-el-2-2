@@ -116,7 +116,7 @@ public class MainApp extends Application {
         }
     }
 
-    public boolean showStudyGroupEditDialog(StudyGroup.StudyGroupBuilder builder) {
+    public boolean showStudyGroupEditDialog(StudyGroup.StudyGroupBuilder builder, StudyGroup selectedGroup) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/view/StudyGroupEditDialog.fxml"));
@@ -132,7 +132,7 @@ public class MainApp extends Application {
 
             StudyGroupEditDialogCont controller = loader.getController();
             controller.setDialogStage(dialogStage);
-            controller.setStudyGroupBuilder(builder);
+            controller.setStudyGroupBuilder(builder, selectedGroup);
 
             dialogStage.showAndWait();
 
@@ -143,7 +143,6 @@ public class MainApp extends Application {
         }
     }
 
-
     public static void showAlert(String title, String header, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -151,7 +150,15 @@ public class MainApp extends Application {
         alert.setContentText(content);
         alert.showAndWait();
     }
-
+    public void changeLocale(Locale locale) {
+        Locale.setDefault(locale);
+        bundle = ResourceBundle.getBundle("messages", Locale.getDefault());
+        reloadScenes();
+    }
+    private void reloadScenes() {
+        initRootLayout();
+        showLoginScreen();
+    }
     public Stage getPrimaryStage() {
         return primaryStage;
     }

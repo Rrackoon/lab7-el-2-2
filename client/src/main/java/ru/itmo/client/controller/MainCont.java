@@ -220,7 +220,7 @@ public class MainCont {
     @FXML
     private void handleAdd() {
         StudyGroup.StudyGroupBuilder builder = StudyGroup.builder();
-        boolean okClicked = mainApp.showStudyGroupEditDialog(builder);
+        boolean okClicked = mainApp.showStudyGroupEditDialog(builder,null);
 
         if (okClicked) {
             builder.login(runner.getLogin());
@@ -247,6 +247,7 @@ public class MainCont {
                         Platform.runLater(() -> {
                             StudyGroup newStudyGroup = studyGroup;
                             dataTable.getItems().add(newStudyGroup);
+                            dataVisualisationCont.addObject(newStudyGroup);
                         });
                     }
                 }
@@ -315,7 +316,7 @@ public class MainCont {
         if (selectedStudyGroup != null) {
             StudyGroup.StudyGroupBuilder builder = selectedStudyGroup.toBuilder();
 
-            boolean okClicked = mainApp.showStudyGroupEditDialog(builder);
+            boolean okClicked = mainApp.showStudyGroupEditDialog(builder,selectedStudyGroup);
             if (okClicked) {
                 StudyGroup updatedStudyGroup = builder.build();
                 Task<Void> task = new Task<>() {
@@ -416,7 +417,7 @@ public class MainCont {
     private void handleAddIfMin() {
         StudyGroup.StudyGroupBuilder builder = StudyGroup.builder();
 
-        boolean okClicked = mainApp.showStudyGroupEditDialog(builder);
+        boolean okClicked = mainApp.showStudyGroupEditDialog(builder,null);
 
         if (okClicked) {
             StudyGroup newStudyGroup = builder.build();

@@ -105,14 +105,10 @@ public class DataVisualisationCont {
 
         int x = studyGroup.getCoordinates().getX() + (int) offsetX;
         long y = studyGroup.getCoordinates().getY() + (int) offsetY;
-        int size = 12; // Example size
+        // int size = 12; // Example size
+        int size=studyGroup.getStudentsCount()/10; // Отражает численность группы
+        gc.fillOval(x, y, size, size);
 
-        Timeline timeline = new Timeline();
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(500), event -> {
-            gc.fillOval(x, y, size, size);
-        });
-        timeline.getKeyFrames().add(keyFrame);
-        timeline.play();
     }
 
     private void handleMouseClick(MouseEvent event) {
@@ -122,14 +118,15 @@ public class DataVisualisationCont {
         for (StudyGroup studyGroup : studyGroups) {
             int objX = studyGroup.getCoordinates().getX() + (int) offsetX;
             long objY = studyGroup.getCoordinates().getY() + (int) offsetY;
-            int size = 10; // Example size
-
+            //int size = 10; // Example size
+            int size = studyGroup.getStudentsCount()/10;
             if (x >= objX && x <= objX + size && y >= objY && y <= objY + size) {
                 showObjectInfo(studyGroup);
                 break;
             }
         }
     }
+
 
     private void handleMousePress(MouseEvent event) {
         startX = event.getX();
