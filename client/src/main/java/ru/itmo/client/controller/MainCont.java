@@ -36,7 +36,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainCont {
+    // Поле для хранения текущей группы
     StudyGroup studyGroup;
+
+    // Аннотация @FXML указывает на то, что поле связано с элементом интерфейса из FXML файла
     @FXML
     public Button helpButton;
     @FXML
@@ -48,6 +51,7 @@ public class MainCont {
     @Setter
     private ResourceBundle bundle;
 
+    // Поля для таблицы данных и её столбцов
     @FXML
     private TableView<StudyGroup> dataTable;
     @FXML
@@ -77,6 +81,7 @@ public class MainCont {
     @FXML
     private TableColumn<StudyGroup, Long> userIdColumn;
 
+    // Поля для ввода данных
     @FXML
     private TextField locationNameField;
     @FXML
@@ -109,6 +114,7 @@ public class MainCont {
     @FXML
     private TextField loginField;
 
+    // Кнопки управления
     @FXML
     private Button addButton;
     @FXML
@@ -129,10 +135,12 @@ public class MainCont {
     @Setter
     private Stage primaryStage;
 
+    // Данные для таблицы
     private ObservableList<StudyGroup> studyGroupData = FXCollections.observableArrayList();
     private Thread fetchThread;
     private boolean fetchThreadRunning = false;
 
+    // Поле для визуализации данных
     @FXML
     private Canvas canvas;
 
@@ -150,6 +158,8 @@ public class MainCont {
     private StackPane buttonStack;
 
     private boolean isPanelVisible = true;
+
+    // Метод для показа/скрытия панели слева
     @FXML
     private void toggleLeftPanel() {
         TranslateTransition transition = new TranslateTransition(Duration.millis(300), leftPanel);
@@ -178,6 +188,7 @@ public class MainCont {
         transition.play();
     }
 
+    // Метод для изменения размеров таблицы
     private void resizeTable() {
         if (isPanelVisible) {
             dataTable.setPrefWidth(mainPane.getWidth() - leftPanel.getPrefWidth() - buttonStack.getPrefWidth());
@@ -185,6 +196,8 @@ public class MainCont {
             dataTable.setPrefWidth(mainPane.getWidth() - buttonStack.getPrefWidth());
         }
     }
+
+    // Инициализация контроллера
     @FXML
     private void initialize() {
         // Инициализация столбцов таблицы
@@ -217,10 +230,11 @@ public class MainCont {
         showPanelButton.setVisible(false);
     }
 
+    // Метод для добавления новой группы
     @FXML
     private void handleAdd() {
         StudyGroup.StudyGroupBuilder builder = StudyGroup.builder();
-        boolean okClicked = mainApp.showStudyGroupEditDialog(builder,null);
+        boolean okClicked = mainApp.showStudyGroupEditDialog(builder, null);
 
         if (okClicked) {
             builder.login(runner.getLogin());
@@ -230,6 +244,7 @@ public class MainCont {
                     try {
                         studyGroup = builder.build();
                         CommandShallow shallow = new CommandShallow("add", null, studyGroup, runner.getLogin(), runner.getPassword());
+                        // Отправляем команду на сервер и получаем ответ
                         Response response = runner.sendShallow(shallow);
                         if (response == null || response.getData() == null) return false;
                         studyGroup.setId(Long.parseLong(response.getData().toString()));
@@ -262,6 +277,7 @@ public class MainCont {
         }
     }
 
+    // Метод для получения списка групп с сервера
     public void fetchStudyGroup() {
         Task<ObservableList<StudyGroup>> task = new Task<>() {
             @Override
@@ -299,6 +315,7 @@ public class MainCont {
         startFectchStudyGroup(task);
     }
 
+    // Метод для старта задачи получения данных
     private void startFectchStudyGroup(Task<ObservableList<StudyGroup>> task) {
         fetchThread = new Thread(task);
         fetchThread.setDaemon(true);
@@ -310,13 +327,14 @@ public class MainCont {
         task.setOnCancelled(event -> fetchThreadRunning = false);
     }
 
+    // Метод для обновления группы
     @FXML
     private void handleUpdate() {
         StudyGroup selectedStudyGroup = dataTable.getSelectionModel().getSelectedItem();
         if (selectedStudyGroup != null) {
             StudyGroup.StudyGroupBuilder builder = selectedStudyGroup.toBuilder();
 
-            boolean okClicked = mainApp.showStudyGroupEditDialog(builder,selectedStudyGroup);
+            boolean okClicked = mainApp.showStudyGroupEditDialog(builder, selectedStudyGroup);
             if (okClicked) {
                 StudyGroup updatedStudyGroup = builder.build();
                 Task<Void> task = new Task<>() {
@@ -348,6 +366,7 @@ public class MainCont {
         }
     }
 
+    // Метод для удаления группы
     @FXML
     private void handleDelete() {
         int selectedIndex = dataTable.getSelectionModel().getSelectedIndex();
@@ -381,6 +400,7 @@ public class MainCont {
         }
     }
 
+    // Метод для очистки всех групп
     @FXML
     private void handleClear() {
         boolean confirmed = showConfirmationDialog("Confirmation", "Clear all StudyGroups?", "This action cannot be undone.");
@@ -413,11 +433,12 @@ public class MainCont {
         }
     }
 
+    // Метод для добавления группы, если она минимальная
     @FXML
     private void handleAddIfMin() {
         StudyGroup.StudyGroupBuilder builder = StudyGroup.builder();
 
-        boolean okClicked = mainApp.showStudyGroupEditDialog(builder,null);
+        boolean okClicked = mainApp.showStudyGroupEditDialog(builder, null);
 
         if (okClicked) {
             StudyGroup newStudyGroup = builder.build();
@@ -460,6 +481,7 @@ public class MainCont {
         }
     }
 
+    // Метод для выполнения скрипта
     @FXML
     private void handleExecuteScript() {
         FileChooser fileChooser = new FileChooser();
@@ -495,6 +517,7 @@ public class MainCont {
         }
     }
 
+    // Метод для отображения деталей группы
     private void showStudyGroupDetails(StudyGroup studyGroup) {
         if (studyGroup != null) {
             Platform.runLater(() -> {
@@ -533,6 +556,7 @@ public class MainCont {
         }
     }
 
+    // Метод для отображения окна помощи
     @FXML
     private void handleHelp() {
         // Display help dialog or message
@@ -579,6 +603,7 @@ public class MainCont {
         helpStage.show();
     }
 
+    // Метод для отображения диалога подтверждения
     private boolean showConfirmationDialog(String title, String header, String content) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
@@ -594,6 +619,7 @@ public class MainCont {
         return result.isPresent() && result.get() == buttonTypeYes;
     }
 
+    // Метод для отображения информационного окна
     private void showAlert(String title, String header, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -602,6 +628,7 @@ public class MainCont {
         alert.showAndWait();
     }
 
+    // Метод для установки информации о пользователе
     public void setUserInfo() {
         String userId = runner.getLogin();
         String username = runner.getCurrentUsername();
@@ -609,6 +636,4 @@ public class MainCont {
                 bundle.getString("main.user.info"), username,
                 bundle.getString("main.user.info.id"), userId)));
     }
-
-
 }

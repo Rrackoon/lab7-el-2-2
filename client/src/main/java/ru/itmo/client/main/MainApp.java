@@ -19,25 +19,27 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class MainApp extends Application {
-    private Stage primaryStage;
-    private BorderPane rootLayout;
-    private Runner runner;
-    private ResourceBundle bundle;
+    private Stage primaryStage;  // Основная сцена приложения
+    private BorderPane rootLayout;  // Корневой макет приложения
+    private Runner runner;  // Класс для взаимодействия с сервером
+    private ResourceBundle bundle;  // Ресурсный бандл для локализации
 
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Study Group Manager");
 
+        // Установка локали по умолчанию на русский
         Locale.setDefault(new Locale("ru"));
         bundle = ResourceBundle.getBundle("messages", Locale.getDefault());
 
-        runner = new Runner();
+        runner = new Runner();  // Инициализация объекта Runner
 
-        initRootLayout();
-        showLoginScreen();
+        initRootLayout();  // Инициализация корневого макета
+        showLoginScreen();  // Отображение экрана входа
     }
 
+    // Метод для отображения экрана входа
     public void showLoginScreen() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -55,6 +57,7 @@ public class MainApp extends Application {
         }
     }
 
+    // Метод для отображения главного экрана приложения
     public void showMainView() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -62,9 +65,9 @@ public class MainApp extends Application {
             if (resourceUrl == null) {
                 throw new IOException("Resource not found: /view/MainScreen.fxml");
             }
-            loader.setLocation(resourceUrl);
-            loader.setResources(bundle);
-            BorderPane mainScreen = loader.load();
+            loader.setLocation(resourceUrl);//устновка местоположения ресурса fxml, кот нужно загрузить.
+            loader.setResources(bundle);//установка ресурсноого бандла для локализации
+            BorderPane mainScreen = loader.load();//загружает и парсит fxml
 
             rootLayout.setCenter(mainScreen);
 
@@ -81,6 +84,7 @@ public class MainApp extends Application {
         }
     }
 
+    // Метод для инициализации корневого макета
     public void initRootLayout() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -100,6 +104,7 @@ public class MainApp extends Application {
         }
     }
 
+    // Метод для отображения экрана регистрации
     public void showRegisterView() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -116,6 +121,7 @@ public class MainApp extends Application {
         }
     }
 
+    // Метод для отображения диалога редактирования StudyGroup
     public boolean showStudyGroupEditDialog(StudyGroup.StudyGroupBuilder builder, StudyGroup selectedGroup) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -143,6 +149,7 @@ public class MainApp extends Application {
         }
     }
 
+    // Метод для показа сообщения об ошибке или информации
     public static void showAlert(String title, String header, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -150,19 +157,26 @@ public class MainApp extends Application {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
+    // Метод для смены локали и перезагрузки сцен
     public void changeLocale(Locale locale) {
         Locale.setDefault(locale);
         bundle = ResourceBundle.getBundle("messages", Locale.getDefault());
         reloadScenes();
     }
+
+    // Метод для перезагрузки сцен при смене локали
     private void reloadScenes() {
         initRootLayout();
         showLoginScreen();
     }
+
+    // Возвращает основную сцену приложения
     public Stage getPrimaryStage() {
         return primaryStage;
     }
 
+    // Точка входа в приложение
     public static void main(String[] args) {
         launch(args);
     }

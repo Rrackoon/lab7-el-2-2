@@ -7,48 +7,53 @@ import ru.itmo.common.models.*;
 
 public class StudyGroupEditDialogCont {
     @FXML
-    private TextField nameField;
+    private TextField nameField;  // Поле для ввода названия группы
     @FXML
-    private TextField coordinatesField;
+    private TextField coordinatesField;  // Поле для ввода координат
     @FXML
-    private TextField studentsCountField;
+    private TextField studentsCountField;  // Поле для ввода количества студентов
     @FXML
-    private TextField expelledStudentsField;
+    private TextField expelledStudentsField;  // Поле для ввода количества отчисленных студентов
     @FXML
-    private TextField shouldBeExpelledField;
+    private TextField shouldBeExpelledField;  // Поле для ввода количества студентов, которые должны быть отчислены
     @FXML
-    private ComboBox<FormOfEducation> formOfEducationField;
+    private ComboBox<FormOfEducation> formOfEducationField;  // Поле для выбора формы образования
     @FXML
-    private TextField adminNameField;
+    private TextField adminNameField;  // Поле для ввода имени администратора группы
     @FXML
-    private TextField passportIDField;
+    private TextField passportIDField;  // Поле для ввода паспортного ID администратора
     @FXML
-    private ComboBox<Color> hairColorField;
+    private ComboBox<Color> hairColorField;  // Поле для выбора цвета волос администратора
     @FXML
-    private TextField locationXField;
+    private TextField locationXField;  // Поле для ввода координаты X местоположения
     @FXML
-    private TextField locationYField;
+    private TextField locationYField;  // Поле для ввода координаты Y местоположения
     @FXML
-    private TextField locationNameField;
-    private Stage dialogStage;
-    private StudyGroup.StudyGroupBuilder studyGroupBuilder;
-    private StudyGroup selectedGroup;
-    private boolean okClicked = false;
+    private TextField locationNameField;  // Поле для ввода названия местоположения
+
+    private Stage dialogStage;  // Ссылка на текущий диалог
+    private StudyGroup.StudyGroupBuilder studyGroupBuilder;  // Билдер для создания или изменения объекта StudyGroup
+    private StudyGroup selectedGroup;  // Выбранная группа для редактирования
+    private boolean okClicked = false;  // Флаг для определения, нажата ли кнопка OK
 
     @FXML
     private void initialize() {
+        // Инициализация выпадающих списков
         formOfEducationField.getItems().addAll(FormOfEducation.values());
         hairColorField.getItems().addAll(Color.values());
     }
 
+    // Устанавливает текущий диалог
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
+    // Устанавливает билдер для группы и заполняет поля, если группа выбрана для редактирования
     public void setStudyGroupBuilder(StudyGroup.StudyGroupBuilder builder, StudyGroup selectedGroup) {
         this.studyGroupBuilder = builder;
         this.selectedGroup = selectedGroup;
         if (selectedGroup != null) {
+            // Заполняем поля данными выбранной группы
             nameField.setText(selectedGroup.getName());
             coordinatesField.setText(selectedGroup.getCoordinates().getX() + ";" + selectedGroup.getCoordinates().getY());
             studentsCountField.setText("" + selectedGroup.getStudentsCount());
@@ -64,15 +69,19 @@ public class StudyGroupEditDialogCont {
         }
     }
 
+    // Возвращает true, если нажата кнопка OK
     public boolean isOkClicked() {
         return okClicked;
     }
 
+    // Обработчик нажатия кнопки OK
     @FXML
     private void handleOk() {
         if (isInputValid()) {
+            // Установка значений для билдера
             studyGroupBuilder.name(nameField.getText());
 
+            // Обработка координат
             String[] coordinates = coordinatesField.getText().split(";");
             if (coordinates.length == 2) {
                 try {
@@ -88,6 +97,7 @@ public class StudyGroupEditDialogCont {
                 return;
             }
 
+            // Установка остальных полей
             studyGroupBuilder.studentsCount(Integer.parseInt(studentsCountField.getText()));
             studyGroupBuilder.expelledStudents(Integer.parseInt(expelledStudentsField.getText()));
             studyGroupBuilder.shouldBeExpelled(Integer.parseInt(shouldBeExpelledField.getText()));
@@ -104,16 +114,19 @@ public class StudyGroupEditDialogCont {
                             .build()
             );
 
+            // Устанавливаем флаг и закрываем диалог
             okClicked = true;
             dialogStage.close();
         }
     }
 
+    // Обработчик нажатия кнопки Cancel
     @FXML
     private void handleCancel() {
         dialogStage.close();
     }
 
+    // Проверка правильности введенных данных
     private boolean isInputValid() {
         String errorMessage = "";
 
@@ -196,9 +209,11 @@ public class StudyGroupEditDialogCont {
             }
         }
 
+        // Если нет ошибок, возвращаем true
         if (errorMessage.length() == 0) {
             return true;
         } else {
+            // Показываем сообщение об ошибках
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initOwner(dialogStage);
             alert.setTitle("Invalid Fields");
@@ -211,6 +226,7 @@ public class StudyGroupEditDialogCont {
         }
     }
 
+    // Метод для показа сообщения об ошибке
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.initOwner(dialogStage);
